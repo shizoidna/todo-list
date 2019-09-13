@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <title>Hello world!</title>
+  <link rel="stylesheet" href="../node_modules/bootstrap/dist/css/bootstrap.css">
+  <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+<div class="container-fluid">
+  <div class="row">
+    <div class="col d-md-flex py-3">
+      <div class="mb-2">
+        <form class="form-inline" id="form-add-task">
+          <div class="form-group mr-2">
+            <label class="sr-only"></label>
+            <input type="text" class="form-control" placeholder="task" id="new-task">
+          </div>
+          <button type="submit" class="btn btn-primary" id="button-add">Add</button>
+        </form>
+      </div>
+      <div class="flex-grow-1"></div>
+      <div class="mr-2">
+        <button class="btn btn-danger" id="button-reset-tasks">Reset</button>
+      </div>
+      <div>
+        <button class="btn btn-secondary" id="button-undo">Undo</button>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col">
+      <ol id="tasks-list">
+      </ol>
+    </div>
+  </div>
+  <ol>
+  </ol>
+</div>
+<script src="models/tasks-repository.js"></script>
+<script src="models/task.js"></script>
+<script src="models/local-storage-service.js"></script>
+<script src="index.js"></script>
+</body>
+</html>
