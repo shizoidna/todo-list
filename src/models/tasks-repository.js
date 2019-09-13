@@ -23,9 +23,13 @@ class TasksRepository {
       const list = this.getList(this._key);
       const currentTask = list.find((element) => element.id === id);
 
-      currentTask.isDone = isDone;
-      currentTask.message = message;
-      this._saveList(currentTask);
+      if(currentTask !== undefined){
+        currentTask.isDone = isDone;
+        currentTask.message = message;
+        this._saveList(list);
+      } else {
+        this._saveList(list);
+      }
   }
 
   delete(id) {
@@ -42,6 +46,16 @@ class TasksRepository {
     this._saveList([]);
   }
 
+  makeBackup() {
+    const list = this.getList();
+    this._saveBackup(list);
+  }
+
+  restoreBackup() {
+    const list = this._getBackupList();
+    this._saveList(list);
+  }
+
   _generateId() {
     return Date.now();
   }
@@ -49,5 +63,16 @@ class TasksRepository {
   _saveList(value) {
     this.storageService.setByKey(this._key, value);
   }
+
+  _saveBackup(value) {
+    this.storageService.setByKey(this._keyBackup, value)
+  }
+
+  _getBackupList() {
+    return this.storageService.getByKey(this._keyBackup) || [];
+  }
+
 }
+
+
 

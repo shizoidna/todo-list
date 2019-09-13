@@ -10,7 +10,7 @@ class LocalStorageService {
   setByKey(key, value) {
     const serializedValue = this._serialize(value);
 
-    localStorage.setItem(key,serializedValue);
+    localStorage.setItem(key, serializedValue);
   }
 
   _serialize(value) {
