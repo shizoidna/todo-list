@@ -1,12 +1,12 @@
 'use strict';
 
-class ResetTasksController {
+class DeleteTaskController {
 
   constructor(tasksRepository) {
     this.tasksRepository = tasksRepository;
   }
 
-  resetTasks() {
-    this.tasksRepository.resetList();
+  deleteTask(id) {
+    this.tasksRepository.delete(id);
   }
 }

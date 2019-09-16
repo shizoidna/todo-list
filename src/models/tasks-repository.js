@@ -13,26 +13,56 @@ class TasksRepository {
     return this.storageService.getByKey(this._key) || [];
   }
 
-  create(message) {
+  /**
+   * Create a new task.
+   * @param {string} message
+   * @param {Object} [payload={isDone: false}]
+   */
+  create(message, payload = {}) {
+    checkArgumentsDefinedHelper([message]);
+    const def = {isDone: false};
+    const updatedPayload = {...def,...payload};
+
+    this._makeBackup();
+
     const list = this.getList();
-    const newTasks = [...list, {id: this._generateId(), message: message, isDone: false}];
+    const newTasks = [...list, {id: this._generateId(), message: message, isDone: updatedPayload.isDone}];
     this._saveList(newTasks);
   }
 
-  update(id, message, isDone) {
-      const list = this.getList(this._key);
-      const currentTask = list.find((element) => element.id === id);
+  /**
+   * Update task
+   * @param {string} id
+   * @param {Object} [payload={message: '', isDone: false}]
+   */
+  update(id, payload) {
+    checkArgumentsDefinedHelper([id,payload]);
 
-      if(currentTask !== undefined){
-        currentTask.isDone = isDone;
-        currentTask.message = message;
-        this._saveList(list);
-      } else {
-        this._saveList(list);
-      }
+    this._makeBackup();
+
+    const list = this.getList(this._key);
+    const currentTask = list.find((element) => element.id === id);
+
+    if (currentTask === undefined) {
+      throw new Error('Cannot find value');
+    }
+
+    //if(payload.isDone !== undefined || payload.message !== undefined)
+    if (payload.isDone !== undefined) {
+      currentTask.isDone = payload.isDone;
+    }
+
+    if (payload.message !== undefined) {
+      currentTask.message = payload.message;
+    }
+
+    this._saveList(list);
   }
 
   delete(id) {
+    checkArgumentsDefinedHelper([id]);
+    this._makeBackup();
+
     const list = this.getList();
 
     const updatedList = list.filter((task) => {
@@ -43,12 +73,9 @@ class TasksRepository {
   }
 
   resetList() {
-    this._saveList([]);
-  }
+    this._makeBackup();
 
-  makeBackup() {
-    const list = this.getList();
-    this._saveBackup(list);
+    this._saveList([]);
   }
 
   restoreBackup() {
@@ -56,8 +83,18 @@ class TasksRepository {
     this._saveList(list);
   }
 
+  _makeBackup() {
+    const list = this.getList();
+    this._saveBackup(list);
+  }
+
+  /**
+   * Generates id
+   * @returns {string}
+   * @private
+   */
   _generateId() {
-    return Date.now();
+    return 'id' + Date.now();
   }
 
   _saveList(value) {
