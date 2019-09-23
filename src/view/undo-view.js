@@ -1,8 +1,9 @@
 'use  strict';
 
-class UndoView {
+export class UndoView {
   constructor(undoTasksController) {
     this.undoTasksController = undoTasksController;
+    this.addEventHandler();
   }
 
   addEventHandler() {

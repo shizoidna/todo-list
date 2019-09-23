@@ -1,6 +1,6 @@
 'use strict';
 
-class ResetView {
+export class ResetView {
   constructor(resetTasksController) {
     this.resetTasksController = resetTasksController;
   }

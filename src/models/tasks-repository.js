@@ -1,11 +1,11 @@
 'use strict';
 
-class TasksRepository {
-  _key = 'toDoList';
-  _keyBackup = `${this._key}Backup`;
+import {checkArgumentsDefinedHelper} from '../helpers/check-arguments-defined-helper';
 
-
+export class TasksRepository {
   constructor(storageService) {
+    this._key = 'toDoList';
+    this._keyBackup = `${this._key}Backup`;
     this.storageService = storageService;
   }
 
@@ -21,7 +21,7 @@ class TasksRepository {
   create(message, payload = {}) {
     checkArgumentsDefinedHelper([message]);
     const def = {isDone: false};
-    const updatedPayload = {...def,...payload};
+    const updatedPayload = {...def, ...payload};
 
     this._makeBackup();
 
@@ -36,23 +36,23 @@ class TasksRepository {
    * @param {Object} [payload={message: '', isDone: false}]
    */
   update(id, payload) {
-    checkArgumentsDefinedHelper([id,payload]);
+    checkArgumentsDefinedHelper([id, payload]);
 
     this._makeBackup();
 
     const list = this.getList(this._key);
     const currentTask = list.find((element) => element.id === id);
-
     if (currentTask === undefined) {
       throw new Error('Cannot find value');
     }
 
     Object.keys(payload).forEach((key) => {
-     const elem = payload[key];
-     if(elem !== undefined) {
-       currentTask[key] = elem;
-     }
-   });
+      const propertyValue = payload[key];
+
+      if (propertyValue !== undefined) {
+        currentTask[key] = propertyValue;
+      }
+    });
 
     this._saveList(list);
   }
@@ -88,7 +88,7 @@ class TasksRepository {
 
   /**
    * Generates id
-   * @returns {string}
+   * @return {string}
    * @private
    */
   _generateId() {
@@ -106,8 +106,4 @@ class TasksRepository {
   _getBackupList() {
     return this.storageService.getByKey(this._keyBackup) || [];
   }
-
 }
-
-
-

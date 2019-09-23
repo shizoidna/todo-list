@@ -1,12 +1,17 @@
 'use strict';
 
-class TasksListController {
-  constructor(tasksRepository, listView, eventBusService) {
-    this.tasksRepository = tasksRepository;
-    this.listView = listView;
-    this.eventBusService = eventBusService;
+import {ListView} from '../view/list-view';
 
-    this.eventBusService.subscribe('AddTask', this.listView.renderList);
+export class TasksListController {
+  constructor(tasksRepository, eventBusService) {
+    this.tasksRepository = tasksRepository;
+    this.eventBusService = eventBusService;
+    this.listView = new ListView(this);
+  }
+
+  init() {
+    this.eventBusService.subscribe('AddTask', () => this.listView.renderList());
+    this.listView.renderList();
   }
 
   getList() {
@@ -19,5 +24,6 @@ class TasksListController {
 
   deleteTask(id) {
     this.tasksRepository.delete(id);
+    this.listView.renderList();
   }
 }

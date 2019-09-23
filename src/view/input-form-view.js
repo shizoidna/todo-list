@@ -1,8 +1,11 @@
 'use strict';
 
-class InputFormView {
+export class InputFormView {
   constructor(addTaskController) {
     this.addTaskController = addTaskController;
+  }
+
+  init() {
     this._addEventHandler();
   }
 
@@ -14,9 +17,12 @@ class InputFormView {
   onClickAdd(action) {
     action.preventDefault();
 
-    const message = document.getElementById('new-task').value;
+
+    const inputField = document.getElementById('new-task');
+    const message = inputField.value;
     if (message !== '') {
       this.addTaskController.addTask(message);
+      inputField.value = '';
     } else {
       alert('write a proper name of task');
     }

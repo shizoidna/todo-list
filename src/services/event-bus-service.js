@@ -1,6 +1,6 @@
 'use strict';
 
-class EventBusService {
+export class EventBusService {
   constructor() {
     this._topics = {};
   }

@@ -1,6 +1,6 @@
 'use strict';
 
-class ListView {
+export class ListView {
   constructor(tasksListController) {
     this.tasksListController = tasksListController;
   }
@@ -12,6 +12,7 @@ class ListView {
 
   renderList() {
     this.clearList();
+
     this.tasksListController.getList().forEach((elem) => this._renderTask(elem));
 
     const checkboxesChecked = document.querySelectorAll('input.form-check-input-align-middle');
@@ -26,15 +27,15 @@ class ListView {
   }
 
   onClickMarkAsDone(action) {
-    const id = Number(action.target.dataset.id);
-    this.tasksListController.changeIsDone(id, {isDone: true});
+    const id = action.target.dataset.id;
+    const isDone = action.target.checked;
+    this.tasksListController.changeIsDone(id, isDone);
   }
 
   onClickDeleteTask(action) {
     const id = action.target.dataset.id;
     this.tasksListController.deleteTask(id);
     // makeButtonUndoEnabled();
-    this.renderList();
   }
 
   _renderTask(task) {
@@ -43,7 +44,12 @@ class ListView {
 
     li.innerHTML = `
       <div class="form-check pl-0"> 
-        <input class="form-check-input-align-middle" type="checkbox" value="${task.isDone}"  data-id="${task.id}">
+        <input 
+        class="form-check-input-align-middle" 
+        type="checkbox" 
+        value="${task.isDone}" 
+        ${task.isDone ? 'checked ' : ' '}
+        data-id="${task.id}">
         <label class="form-check-label" for="${task.message}">
           ${task.message}
         </label>

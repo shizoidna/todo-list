@@ -1,6 +1,6 @@
 'use strict';
 
-class LocalStorageService {
+export class LocalStorageService {
   getByKey(key) {
     const value = localStorage.getItem(key);
 

@@ -2,7 +2,8 @@
   "name": "todo-list",
   "description": "",
   "scripts": {
-    "test": "jest"
+    "test": "jest",
+    "build": "webpack --config webpack.config.js"
   },
   "dependencies": {
     "bootstrap": "^4.3.1"
@@ -10,6 +11,8 @@
   "devDependencies": {
     "eslint": "^6.3.0",
     "eslint-config-google": "^0.14.0",
-    "jest": "^24.9.0"
+    "jest": "^24.9.0",
+    "webpack": "^4.40.2",
+    "webpack-cli": "^3.3.9"
   }
 }

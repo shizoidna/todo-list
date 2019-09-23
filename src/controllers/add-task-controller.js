@@ -1,10 +1,16 @@
 'use strict';
 
-class AddTaskController{
+import {InputFormView} from '../view/input-form-view';
 
+export class AddTaskController {
   constructor(tasksRepository, eventBusService) {
     this.tasksRepository = tasksRepository;
     this.eventBusService = eventBusService;
+    this.inputFormView = new InputFormView(this);
+  }
+
+  init() {
+    this.inputFormView.init();
   }
 
   addTask(message) {
