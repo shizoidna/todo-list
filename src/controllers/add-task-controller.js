@@ -1,12 +1,14 @@
 'use strict';
 
-class AddTaskController {
+class AddTaskController{
 
-  constructor(tasksRepository) {
+  constructor(tasksRepository, eventBusService) {
     this.tasksRepository = tasksRepository;
+    this.eventBusService = eventBusService;
   }
 
-  addTasks(message) {
+  addTask(message) {
     this.tasksRepository.create(message, false);
+    this.eventBusService.publish('AddTask', {message});
   }
 }

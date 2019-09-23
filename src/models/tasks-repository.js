@@ -47,14 +47,12 @@ class TasksRepository {
       throw new Error('Cannot find value');
     }
 
-    //if(payload.isDone !== undefined || payload.message !== undefined)
-    if (payload.isDone !== undefined) {
-      currentTask.isDone = payload.isDone;
-    }
-
-    if (payload.message !== undefined) {
-      currentTask.message = payload.message;
-    }
+    Object.keys(payload).forEach((key) => {
+     const elem = payload[key];
+     if(elem !== undefined) {
+       currentTask[key] = elem;
+     }
+   });
 
     this._saveList(list);
   }

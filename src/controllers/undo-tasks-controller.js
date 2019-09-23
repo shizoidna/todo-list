@@ -1,12 +1,11 @@
 'use strict';
 
-class DeleteTaskController {
-
+class UndoTasksController {
   constructor(tasksRepository) {
     this.tasksRepository = tasksRepository;
   }
 
-  deleteTask(id) {
-    this.tasksRepository.delete(id);
+  undoTasks() {
+    this.tasksRepository.restoreBackup();
   }
 }
