@@ -1,6 +1,7 @@
 {
   "name": "todo-list",
   "description": "",
+  "private": true,
   "scripts": {
     "test": "jest",
     "build": "webpack --config webpack.config.js"
